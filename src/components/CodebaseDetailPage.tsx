@@ -44,7 +44,7 @@ export default function CodebaseDetailPage({
               onChatInputChange={onChatInputChange}
               onSendMessage={onSendMessage}
             />
-            <ChatRoom room={`codebase-${detailItem.id}`} />
+            {/* <ChatRoom room={`codebase-${detailItem.id}`} /> */}
           </div>
         </div>
       )}

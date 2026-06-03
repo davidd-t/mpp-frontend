@@ -19,7 +19,17 @@ describe('DashboardTable', () => {
     const onDelete = vi.fn()
 
     window.location.hash = ''
-    render(<DashboardTable rows={rows} onEdit={onEdit} onDelete={onDelete} />)
+    render(
+      <DashboardTable
+        rows={rows}
+        onEdit={onEdit}
+        onDelete={onDelete}
+        hasMore={false}
+        isLoadingMore={false}
+        onLoadMore={vi.fn()}
+        totalItems={1}
+      />
+    )
 
     fireEvent.click(screen.getByRole('button', { name: 'api-gateway' }))
     expect(window.location.hash).toBe('#/codebases/c1')

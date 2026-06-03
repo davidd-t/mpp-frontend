@@ -31,7 +31,6 @@ if (typeof globalThis.IntersectionObserver === 'undefined') {
     rootMargin = ''
     thresholds: number[] = []
   }
-  // @ts-expect-error — assigning stub to global
   globalThis.IntersectionObserver = IntersectionObserverStub
 }
 

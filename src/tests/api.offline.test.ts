@@ -176,7 +176,6 @@ describe('offline queue sync', () => {
   it('handles concurrent queue modifications during sync correctly', async () => {
     const calls: string[] = []
     let createCallCount = 0
-    let deletePending = false
 
     vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
       const url = String(input)
@@ -186,9 +185,7 @@ describe('offline queue sync', () => {
         const id = url.split('/').pop()
         calls.push(`delete-${id}`)
         // Simulate network delay during delete to trigger race condition
-        deletePending = true
         await new Promise(resolve => setTimeout(resolve, 50))
-        deletePending = false
         return mockJsonResponse(204, {})
       }
 

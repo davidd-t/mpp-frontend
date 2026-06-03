@@ -1,5 +1,4 @@
 const _proto = typeof window !== 'undefined' && window.location.protocol === 'https:' ? 'https' : 'http'
-const _wsproto = _proto === 'https' ? 'wss' : 'ws'
 const _host = typeof window !== 'undefined' ? window.location.hostname : 'localhost'
 const BASE = import.meta.env.VITE_API_URL || `${_proto}://${_host}:8000`
 const _wsBase = import.meta.env.VITE_API_URL || `${_proto}://${_host}:8000`
@@ -157,7 +156,6 @@ type DeleteQueuePayload = {
 const _offlineQueue: QueuedOp[] = readJsonStorage<QueuedOp[]>(OFFLINE_QUEUE_STORAGE_KEY, [])
 let _syncInFlight: Promise<{ synced: number; failed: number }> | null = null
 let _queueModificationQueue: Array<() => void> = []
-let _processingQueueMods = false
 
 function persistOfflineQueue() {
   writeJsonStorage(OFFLINE_QUEUE_STORAGE_KEY, _offlineQueue)
@@ -176,27 +174,6 @@ function findPendingCreate(clientId: string): QueuedOp | undefined {
 
 export function getOfflineQueue(): QueuedOp[] {
   return [..._offlineQueue]
-}
-
-async function _applyQueueModification(fn: () => void) {
-  // If a sync is in progress, queue the modification to be applied after sync completes
-  if (_syncInFlight) {
-    _queueModificationQueue.push(fn)
-    await _syncInFlight
-  }
-  
-  // Process any queued modifications
-  if (!_processingQueueMods && _queueModificationQueue.length > 0) {
-    _processingQueueMods = true
-    while (_queueModificationQueue.length > 0) {
-      const modification = _queueModificationQueue.shift()!
-      modification()
-    }
-    _processingQueueMods = false
-  } else if (!_syncInFlight) {
-    // If no sync in flight, apply immediately
-    fn()
-  }
 }
 
 export function addToQueue(op: Omit<QueuedOp, 'id' | 'timestamp'>) {
@@ -348,12 +325,10 @@ export async function syncOfflineQueue(): Promise<{ synced: number; failed: numb
 
       // Process any queued modifications that occurred during sync
       if (_queueModificationQueue.length > 0) {
-        _processingQueueMods = true
         while (_queueModificationQueue.length > 0) {
           const modification = _queueModificationQueue.shift()!
           modification()
         }
-        _processingQueueMods = false
         
         // If there are new items in the queue after processing modifications, 
         // continue syncing instead of returning

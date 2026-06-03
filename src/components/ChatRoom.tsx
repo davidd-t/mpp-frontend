@@ -12,7 +12,6 @@ export default function ChatRoom({ room }: { room: string }) {
   const user = getCurrentUser()
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
-  const [connected, setConnected] = useState(false)
   const wsRef = useRef<WebSocket | null>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const [reconnectKey, setReconnectKey] = useState(0)
@@ -27,12 +26,11 @@ export default function ChatRoom({ room }: { room: string }) {
     const ws = new WebSocket(url)
     wsRef.current = ws
 
-    ws.onopen = () => setConnected(true)
+    ws.onopen = () => {}
     ws.onclose = () => {
-      setConnected(false)
       reconnectTimer.current = setTimeout(() => setReconnectKey((k) => k + 1), 3000)
     }
-    ws.onerror = () => setConnected(false)
+    ws.onerror = () => {}
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data)

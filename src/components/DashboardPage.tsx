@@ -29,6 +29,9 @@ export default function DashboardPage({
   onCancelForm,
   onLoadMore
 }) {
+  void safePage
+  void totalPages
+
   return (
     <main className="mx-auto max-w-7xl px-4 py-8">
       <OfflineBanner online={online} syncStatus={syncStatus} />

@@ -1,8 +1,5 @@
-const _proto = typeof window !== 'undefined' && window.location.protocol === 'https:' ? 'https' : 'http'
-const _host = typeof window !== 'undefined' ? window.location.hostname : 'localhost'
-const BASE = import.meta.env.VITE_API_URL || `${_proto}://${_host}:8000`
-const _wsBase = import.meta.env.VITE_API_URL || `${_proto}://${_host}:8000`
-const WS_BASE = _wsBase.replace(/^http/, 'ws')
+const BASE = 'https://mpp-backend-production-d1dc.up.railway.app'
+const WS_BASE = 'wss://mpp-backend-production-d1dc.up.railway.app'
 const OFFLINE_QUEUE_STORAGE_KEY = 'mpp.offlineQueue'
 const LOCAL_STORE_STORAGE_KEY = 'mpp.localStore'
 

@@ -82,10 +82,7 @@ export function isModerator(): boolean {
 }
 
 function getBaseUrl(): string {
-  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL
-  const host = typeof window !== 'undefined' ? window.location.hostname : 'localhost'
-  const proto = typeof window !== 'undefined' && window.location.protocol === 'https:' ? 'https' : 'http'
-  return `${proto}://${host}:8000`
+  return 'https://mpp-backend-production-d1dc.up.railway.app'
 }
 
 export async function login(username: string, password: string): Promise<AuthUser> {

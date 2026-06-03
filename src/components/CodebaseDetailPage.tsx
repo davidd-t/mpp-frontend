@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import ChatPanel from './codebaseDetail/ChatPanel'
-import ChatRoom from './ChatRoom'
+// import ChatRoom from './ChatRoom'
 import CodeViewPanel from './codebaseDetail/CodeViewPanel'
 import DetailHeader from './codebaseDetail/DetailHeader'
 import FilesSidebar from './codebaseDetail/FilesSidebar'

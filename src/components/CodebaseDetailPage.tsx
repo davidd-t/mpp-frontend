@@ -22,11 +22,11 @@ export default function CodebaseDetailPage({
   }, [detailItem])
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-8">
+    <main className="mx-auto max-w-6xl px-6 py-8">
       <DetailHeader detailItem={detailItem} onDelete={onDelete} />
 
       {detailItem && (
-        <div className="grid gap-4 lg:grid-cols-[280px_1fr]">
+        <div className="grid gap-5 lg:grid-cols-[280px_1fr]">
           <div className="flex flex-col gap-4">
             <FilesSidebar />
             <TagsManager

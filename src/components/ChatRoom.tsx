@@ -26,11 +26,11 @@ export default function ChatRoom({ room }: { room: string }) {
     const ws = new WebSocket(url)
     wsRef.current = ws
 
-    ws.onopen = () => {}
+    ws.onopen = () => { }
     ws.onclose = () => {
       reconnectTimer.current = setTimeout(() => setReconnectKey((k) => k + 1), 3000)
     }
-    ws.onerror = () => {}
+    ws.onerror = () => { }
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data)
@@ -66,38 +66,41 @@ export default function ChatRoom({ room }: { room: string }) {
 
   if (!user) {
     return (
-      <section className="rounded-lg border border-white/10 bg-zinc-900 p-3">
-        <p className="text-sm text-zinc-400">Sign in to chat.</p>
+      <section className="glass-card p-4">
+        <p className="text-sm text-slate-500">Sign in to chat.</p>
       </section>
     )
   }
 
   return (
-    <section className="rounded-lg border border-white/10 bg-zinc-900 p-3" data-testid="chat-room">
-      <p className="mb-2 flex items-center justify-between text-sm font-semibold text-zinc-300">
-        <span>Live chat — room <code className="text-cyan-400">{room}</code></span>
-        
-      </p>
+    <section className="glass-card overflow-hidden" data-testid="chat-room">
+      <div className="flex items-center gap-2 border-b border-white/[0.06] px-4 py-2.5">
+        <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+        <p className="text-xs font-semibold text-slate-400">
+          Live chat — <code className="text-brand-400 font-mono">{room}</code>
+        </p>
+      </div>
 
-      <div className="mb-3 max-h-64 space-y-2 overflow-auto rounded border border-white/10 p-2">
+      <div className="max-h-64 space-y-2 overflow-auto p-4">
         {messages.map((m, i) => (
           <div
             key={i}
-            className={`max-w-[85%] rounded px-3 py-2 text-sm ${
-              m.user_id === user.id ? 'ml-auto bg-cyan-500 text-black' : 'bg-zinc-800 text-zinc-100'
-            }`}
+            className={`max-w-[80%] rounded-xl px-3.5 py-2.5 text-sm ${m.user_id === user.id
+                ? 'ml-auto bg-gradient-to-r from-brand-500 to-brand-600 text-surface-900 font-medium'
+                : 'bg-white/[0.04] text-slate-300 ring-1 ring-white/[0.06]'
+              }`}
           >
-            <div className="text-xs opacity-60">{m.username}</div>
+            <div className="text-[10px] opacity-60 mb-0.5">{m.username}</div>
             {m.text}
           </div>
         ))}
         {messages.length === 0 && (
-          <p className="text-xs text-zinc-500">No messages yet — be the first.</p>
+          <p className="py-6 text-center text-xs text-slate-600">No messages yet — be the first.</p>
         )}
         <div ref={bottomRef} />
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 border-t border-white/[0.06] p-4">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -108,7 +111,7 @@ export default function ChatRoom({ room }: { room: string }) {
         />
         <button
           onClick={send}
-          className="rounded bg-cyan-500 px-4 py-2 font-semibold text-black hover:bg-cyan-400"
+          className="btn-primary btn-sm"
           data-testid="chat-send"
         >
           Send

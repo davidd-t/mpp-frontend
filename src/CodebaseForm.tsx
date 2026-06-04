@@ -28,7 +28,7 @@ export default function CodebaseForm({ initialValues, onSubmit, onCancel }) {
 
   return (
     <div>
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2">
         <Field label="Name" error={errors.name}>
           <input value={values.name} onChange={(event) => update('name', event.target.value)} className="input" />
         </Field>
@@ -70,11 +70,11 @@ export default function CodebaseForm({ initialValues, onSubmit, onCancel }) {
           </Field>
         </div>
 
-        <div className="md:col-span-2 flex gap-2">
-          <button onClick={submit} className="rounded bg-cyan-500 px-4 py-2 text-sm font-semibold text-black transition-all hover:scale-105 hover:bg-cyan-400 active:scale-95 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]">
+        <div className="md:col-span-2 flex gap-2.5 pt-1">
+          <button onClick={submit} className="btn-primary">
             Save
           </button>
-          <button type="button" onClick={onCancel} className="rounded border border-white/20 px-4 py-2 text-sm text-zinc-200 transition-all hover:bg-white/10 active:scale-95">
+          <button type="button" onClick={onCancel} className="btn-ghost">
             Cancel
           </button>
         </div>
@@ -85,8 +85,8 @@ export default function CodebaseForm({ initialValues, onSubmit, onCancel }) {
 
 function Field({ label, error, children }) {
   return (
-    <label className="grid gap-1 text-sm text-zinc-200">
-      {label}
+    <label className="grid gap-1.5 text-sm">
+      <span className="font-medium text-slate-300">{label}</span>
       {children}
       {error ? <span className="text-xs text-rose-400">{error}</span> : null}
     </label>

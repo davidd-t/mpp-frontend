@@ -3,7 +3,7 @@ import DashboardHeader from './dashboard/DashboardHeader'
 import DashboardSearch from './dashboard/DashboardSearch'
 import DashboardTable from './dashboard/DashboardTable'
 import DashboardChart from './dashboard/DashboardChart'
-import OfflineBanner from './dashboard/OfflineBanner'
+// import OfflineBanner from './dashboard/OfflineBanner'
 
 export default function DashboardPage({
   refreshKey,
@@ -31,10 +31,11 @@ export default function DashboardPage({
 }) {
   void safePage
   void totalPages
+  void syncStatus
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8">
-      <OfflineBanner online={online} syncStatus={syncStatus} />
+    <main className="mx-auto max-w-7xl px-6 py-8">
+      {/* <OfflineBanner online={online} syncStatus={syncStatus} /> */}
       <DashboardHeader
         onToggleCreate={onToggleCreate}
         onToggleAutoPopulate={onToggleAutoPopulate}
@@ -48,7 +49,7 @@ export default function DashboardPage({
         onUpdate={onUpdate}
         onCancelForm={onCancelForm}
       />
-      <div className="flex flex-col lg:flex-row gap-8 items-start">
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
         <div className="flex-1 w-full flex flex-col gap-4">
           <DashboardSearch search={search} onSearchChange={onSearchChange} />
           <DashboardTable
@@ -62,7 +63,7 @@ export default function DashboardPage({
           />
         </div>
 
-        <div className="w-full lg:w-96 shrink-0 mt-4 lg:mt-0">
+        <div className="w-full lg:w-[380px] shrink-0 mt-4 lg:mt-0">
           <DashboardChart refreshKey={refreshKey} />
         </div>
       </div>

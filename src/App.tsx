@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import AppHeader from './components/AppHeader'
 import AppContent from './components/AppContent'
+import ParticlesBackground from './components/ParticlesBackground'
 import useAppState from './hooks/useAppState'
 import useHashRoute from './hooks/useHashRoute'
 import { getCurrentUser, startInactivityWatch, stopInactivityWatch } from './auth'
@@ -25,9 +26,12 @@ function App() {
   }, [route])
 
   return (
-    <div className="min-h-screen bg-[#090b10] text-zinc-100 pb-16">
-      <AppHeader route={route} />
-      <AppInner key={user?.id ?? 'anon'} route={route} />
+    <div className="min-h-screen text-slate-200 pb-16 relative overflow-x-hidden">
+      <ParticlesBackground />
+      <div className="relative z-10">
+        <AppHeader route={route} />
+        <AppInner key={user?.id ?? 'anon'} route={route} />
+      </div>
     </div>
   )
 }
